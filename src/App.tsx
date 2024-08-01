@@ -26,6 +26,8 @@ const handleScan = (results: IDetectedBarcode[]) => {
     const result = results[0]; // Take the first detected barcode
     // window.location.href = `${result.rawValue}`;
     window.alert(`${result.rawValue}`);
+    console.log("Raw", result.rawValue);
+
     console.log(JSON.parse(result.rawValue));
   }
 };
