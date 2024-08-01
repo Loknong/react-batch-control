@@ -16,6 +16,12 @@
     "react-qr-code": "^2.0.15",
     "react-qr-reader": "^3.0.0-beta-1"
   },
+  "overrides": {
+  "react-qr-reader": {
+    "react": "$react",
+    "react-dom": "$react-dom"
+  }
+},
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
