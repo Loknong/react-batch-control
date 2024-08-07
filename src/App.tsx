@@ -1,6 +1,5 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import {
   Scanner,
   IDetectedBarcode,
@@ -25,10 +24,9 @@ const handleScan = (results: IDetectedBarcode[]) => {
   if (results.length > 0) {
     const result = results[0]; // Take the first detected barcode
     // window.location.href = `${result.rawValue}`;
-    window.alert(`${result.rawValue}`);
-    console.log("Raw", result.rawValue);
+    // window.alert(`${result.rawValue}`);
 
-    console.log(JSON.parse(result.rawValue));
+    console.log("Parse", JSON.parse(result.rawValue));
   }
 };
 
@@ -129,22 +127,7 @@ function App() {
             ]}
           />
         )}
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
