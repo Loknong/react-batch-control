@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Scanner, IDetectedBarcode, IScannerStyles } from "@yudiel/react-qr-scanner";
+
+import {
+  Scanner,
+  IDetectedBarcode,
+  IScannerStyles,
+} from "@yudiel/react-qr-scanner";
 import QRCode from "react-qr-code";
 import "./App.css";
 
@@ -8,12 +13,21 @@ interface QRData {
   userId: string;
   additionalInfo?: string; // Add any additional information you want here
 }
-
 const styles: IScannerStyles = {
   container: {
     width: 400,
     margin: "auto",
   },
+};
+
+const handleScan = (results: IDetectedBarcode[]) => {
+  if (results.length > 0) {
+    const result = results[0]; // Take the first detected barcode
+    // window.location.href = `${result.rawValue}`;
+    window.alert(`${result.rawValue}`);
+
+    console.log("Parse", JSON.parse(result.rawValue));
+  }
 };
 
 function App() {
@@ -22,8 +36,6 @@ function App() {
   const [userId, setUserId] = useState<string>("");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
   const [turnOff, setTurnOff] = useState<boolean>(false);
-  const [scanData, setScanData] = useState<QRData | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const generateQRCodeData = (
     endpoint: string,
@@ -41,20 +53,6 @@ function App() {
   const handleGenerateQR = () => {
     const data = generateQRCodeData(endpoint, userId, additionalInfo);
     setQrData(data);
-  };
-
-  const handleScan = (results: IDetectedBarcode[]) => {
-    if (results.length > 0) {
-      const result = results[0]; // Take the first detected barcode
-      const parsedData: QRData = JSON.parse(result.rawValue);
-      setScanData(parsedData);
-      setIsModalOpen(true);
-    }
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setScanData(null);
   };
 
   return (
@@ -128,19 +126,6 @@ function App() {
               "upc_e",
             ]}
           />
-        )}
-        {isModalOpen && scanData && (
-          <div className="modal">
-            <div className="modal-content">
-              <h2>Scan Information</h2>
-              <p><strong>Endpoint:</strong> {scanData.endpoint}</p>
-              <p><strong>User ID:</strong> {scanData.userId}</p>
-              {scanData.additionalInfo && (
-                <p><strong>Additional Info:</strong> {scanData.additionalInfo}</p>
-              )}
-              <button onClick={closeModal}>Close</button>
-            </div>
-          </div>
         )}
       </div>
     </>
